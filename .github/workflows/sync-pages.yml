@@ -1,0 +1,96 @@
+name: Sync catalog and deploy Pages
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # GitHub cron uses UTC. This runs at 04:17 in Hong Kong.
+    - cron: "17 20 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: lnt-gallery-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Sync and build site
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+
+      - name: Sync anonymous catalog
+        run: python crawler.py
+
+      - name: Validate generated site data
+        run: python crawler.py --check
+
+      - name: Detect catalog changes
+        id: catalog
+        shell: bash
+        run: |
+          git add public/data.json public/cards public/thumbs
+          if git diff --cached --quiet; then
+            echo "Catalog is unchanged"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Catalog changes are ready to commit"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit catalog changes
+        if: steps.catalog.outputs.changed == 'true'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore(data): sync card catalog [skip ci]"
+          git push origin HEAD:main
+
+      - name: Assemble Pages artifact
+        shell: bash
+        run: |
+          mkdir -p dist/public
+          cp index.html app.js styles.css .nojekyll dist/
+          cp public/data.json dist/public/
+          cp -R public/cards public/thumbs dist/public/
+          size_mb=$(du -sm dist | cut -f1)
+          echo "Pages artifact: ${size_mb} MB"
+          test "$size_mb" -lt 950
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="非官方岭南通虚拟交通卡卡面图鉴，用于技术学习与设计归档。">
+  <meta name="color-scheme" content="light dark">
+  <title>LNT Gallery - 岭南通卡面</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-text">
+          <h1>LNT Gallery</h1>
+          <p>岭南通卡面 · Virtual Card Collection</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="search-wrap">
+          <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <label class="visually-hidden" for="searchInput">搜索系列名称</label>
+          <input type="search" id="searchInput" class="search-input" placeholder="搜索系列名称..." autocomplete="off">
+        </div>
+
+        <div class="stat-badges" aria-label="图鉴统计">
+          <span class="stat-badge">📂 <span id="seriesCount">0</span> 系列</span>
+          <span class="stat-badge">🎴 <span id="cardCount">0</span> 卡面</span>
+        </div>
+
+        <button class="theme-btn" id="themeToggle" type="button" aria-label="切换主题" title="切换亮色或暗色主题">
+          <span id="themeIcon" aria-hidden="true">☀️</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <div id="loadingState" class="loading-spinner" aria-live="polite"></div>
+    <div id="seriesContainer" hidden></div>
+    <div id="emptyState" class="empty-state" hidden>
+      <p>没有找到匹配的系列</p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>非官方学习项目，与岭南通及相关版权方无隶属或合作关系。卡面版权归各自权利人所有。</p>
+  </footer>
+
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" type="button" aria-label="关闭">✕</button>
+    <img id="lightboxImg" src="" alt="">
+    <div class="lightbox-info"><span id="lightboxTitle"></span></div>
+  </div>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="回到顶部">↑</button>
+  <script src="app.js"></script>
+</body>
+</html>
