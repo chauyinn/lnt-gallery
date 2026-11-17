@@ -1,21 +1,601 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-30T02:15:17+00:00",
+  "generatedAt": "2026-11-17T06:22:28+00:00",
   "source": {
     "scope": "current anonymous catalog response",
     "cityCode": "01",
     "ctp": "05",
     "suitChannel": "4"
   },
-  "totalSeries": 292,
-  "totalCards": 1337,
+  "totalSeries": 306,
+  "totalCards": 1393,
   "sync": {
-    "newSeries": 13,
-    "newCards": 71,
-    "removedSeries": 9,
-    "removedCards": 38
+    "newSeries": 17,
+    "newCards": 74,
+    "removedSeries": 3,
+    "removedCards": 18
   },
   "series": [
+    {
+      "seriesId": "27876",
+      "seriesName": "蒜皮宝宝 第二弹",
+      "brand": "岭南通·羊城通",
+      "cardCount": 4,
+      "cards": [
+        {
+          "cardId": "27883",
+          "cardName": "蒜皮宝宝-绽放",
+          "imageFile": "cards/27876/27883.webp",
+          "thumbnailFile": "thumbs/27876/27883.webp"
+        },
+        {
+          "cardId": "27890",
+          "cardName": "蒜皮宝宝-演出",
+          "imageFile": "cards/27876/27890.webp",
+          "thumbnailFile": "thumbs/27876/27890.webp"
+        },
+        {
+          "cardId": "27899",
+          "cardName": "蒜皮宝宝-斑斓",
+          "imageFile": "cards/27876/27899.webp",
+          "thumbnailFile": "thumbs/27876/27899.webp"
+        },
+        {
+          "cardId": "27906",
+          "cardName": "蒜皮宝宝-雨天",
+          "imageFile": "cards/27876/27906.webp",
+          "thumbnailFile": "thumbs/27876/27906.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "27834",
+      "seriesName": "暹罗猫小豆泥 泥画我猜",
+      "brand": "岭南通·羊城通",
+      "cardCount": 5,
+      "cards": [
+        {
+          "cardId": "27841",
+          "cardName": "妙笔速写",
+          "imageFile": "cards/27834/27841.webp",
+          "thumbnailFile": "thumbs/27834/27841.webp"
+        },
+        {
+          "cardId": "27848",
+          "cardName": "泥绘时光",
+          "imageFile": "cards/27834/27848.webp",
+          "thumbnailFile": "thumbs/27834/27848.webp"
+        },
+        {
+          "cardId": "27855",
+          "cardName": "画廊陈列",
+          "imageFile": "cards/27834/27855.webp",
+          "thumbnailFile": "thumbs/27834/27855.webp"
+        },
+        {
+          "cardId": "27861",
+          "cardName": "蜡笔涂鸦",
+          "imageFile": "cards/27834/27861.webp",
+          "thumbnailFile": "thumbs/27834/27861.webp"
+        },
+        {
+          "cardId": "27868",
+          "cardName": "调色盘派对",
+          "imageFile": "cards/27834/27868.webp",
+          "thumbnailFile": "thumbs/27834/27868.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "27799",
+      "seriesName": "玫瑰星球",
+      "brand": "岭南通·羊城通",
+      "cardCount": 4,
+      "cards": [
+        {
+          "cardId": "27827",
+          "cardName": "永夜",
+          "imageFile": "cards/27799/27827.webp",
+          "thumbnailFile": "thumbs/27799/27827.webp"
+        },
+        {
+          "cardId": "27820",
+          "cardName": "白茶",
+          "imageFile": "cards/27799/27820.webp",
+          "thumbnailFile": "thumbs/27799/27820.webp"
+        },
+        {
+          "cardId": "27813",
+          "cardName": "海盐",
+          "imageFile": "cards/27799/27813.webp",
+          "thumbnailFile": "thumbs/27799/27813.webp"
+        },
+        {
+          "cardId": "27806",
+          "cardName": "落日",
+          "imageFile": "cards/27799/27806.webp",
+          "thumbnailFile": "thumbs/27799/27806.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "27742",
+      "seriesName": "喵扎特爱台球系列",
+      "brand": "岭南通·羊城通",
+      "cardCount": 7,
+      "cards": [
+        {
+          "cardId": "27749",
+          "cardName": "Snooker",
+          "imageFile": "cards/27742/27749.webp",
+          "thumbnailFile": "thumbs/27742/27749.webp"
+        },
+        {
+          "cardId": "27756",
+          "cardName": "小小",
+          "imageFile": "cards/27742/27756.webp",
+          "thumbnailFile": "thumbs/27742/27756.webp"
+        },
+        {
+          "cardId": "27763",
+          "cardName": "喵扎特",
+          "imageFile": "cards/27742/27763.webp",
+          "thumbnailFile": "thumbs/27742/27763.webp"
+        },
+        {
+          "cardId": "27770",
+          "cardName": "Table King",
+          "imageFile": "cards/27742/27770.webp",
+          "thumbnailFile": "thumbs/27742/27770.webp"
+        },
+        {
+          "cardId": "27777",
+          "cardName": "Lucky Shot",
+          "imageFile": "cards/27742/27777.webp",
+          "thumbnailFile": "thumbs/27742/27777.webp"
+        },
+        {
+          "cardId": "27784",
+          "cardName": "Winner",
+          "imageFile": "cards/27742/27784.webp",
+          "thumbnailFile": "thumbs/27742/27784.webp"
+        },
+        {
+          "cardId": "27791",
+          "cardName": "Snooker Star",
+          "imageFile": "cards/27742/27791.webp",
+          "thumbnailFile": "thumbs/27742/27791.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "27738",
+      "seriesName": "宝可梦30周年 最初的伙伴 卡洛斯地区",
+      "brand": "岭南通·羊城通",
+      "cardCount": 3,
+      "cards": [
+        {
+          "cardId": "27739",
+          "cardName": "哈力栗",
+          "imageFile": "cards/27738/27739.webp",
+          "thumbnailFile": "thumbs/27738/27739.webp"
+        },
+        {
+          "cardId": "27740",
+          "cardName": "火狐狸",
+          "imageFile": "cards/27738/27740.webp",
+          "thumbnailFile": "thumbs/27738/27740.webp"
+        },
+        {
+          "cardId": "27741",
+          "cardName": "呱呱泡蛙",
+          "imageFile": "cards/27738/27741.webp",
+          "thumbnailFile": "thumbs/27738/27741.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "27699",
+      "seriesName": "蛋猫终将上岸阳光万里",
+      "brand": "岭南通·羊城通",
+      "cardCount": 5,
+      "cards": [
+        {
+          "cardId": "27716",
+          "cardName": "一定上岸",
+          "imageFile": "cards/27699/27716.webp",
+          "thumbnailFile": "thumbs/27699/27716.webp"
+        },
+        {
+          "cardId": "27717",
+          "cardName": "好事将至",
+          "imageFile": "cards/27699/27717.webp",
+          "thumbnailFile": "thumbs/27699/27717.webp"
+        },
+        {
+          "cardId": "27718",
+          "cardName": "好运拉满",
+          "imageFile": "cards/27699/27718.webp",
+          "thumbnailFile": "thumbs/27699/27718.webp"
+        },
+        {
+          "cardId": "27725",
+          "cardName": "如我所愿",
+          "imageFile": "cards/27699/27725.webp",
+          "thumbnailFile": "thumbs/27699/27725.webp"
+        },
+        {
+          "cardId": "27732",
+          "cardName": "干啥都顺",
+          "imageFile": "cards/27699/27732.webp",
+          "thumbnailFile": "thumbs/27699/27732.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "27691",
+      "seriesName": "2026年爱在交通公益行活动",
+      "brand": "岭南通·羊城通",
+      "cardCount": 1,
+      "cards": [
+        {
+          "cardId": "27692",
+          "cardName": "友爱在车厢.文明广州行",
+          "imageFile": "cards/27691/27692.webp",
+          "thumbnailFile": "thumbs/27691/27692.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "27687",
+      "seriesName": "宝可梦30周年 最初的伙伴 阿罗拉地区",
+      "brand": "岭南通·羊城通",
+      "cardCount": 3,
+      "cards": [
+        {
+          "cardId": "27688",
+          "cardName": "木木枭",
+          "imageFile": "cards/27687/27688.webp",
+          "thumbnailFile": "thumbs/27687/27688.webp"
+        },
+        {
+          "cardId": "27689",
+          "cardName": "火斑喵",
+          "imageFile": "cards/27687/27689.webp",
+          "thumbnailFile": "thumbs/27687/27689.webp"
+        },
+        {
+          "cardId": "27690",
+          "cardName": "球球海狮",
+          "imageFile": "cards/27687/27690.webp",
+          "thumbnailFile": "thumbs/27687/27690.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "27632",
+      "seriesName": "loveez欢乐日常系列",
+      "brand": "岭南通·羊城通",
+      "cardCount": 6,
+      "cards": [
+        {
+          "cardId": "27639",
+          "cardName": "奶油派对",
+          "imageFile": "cards/27632/27639.webp",
+          "thumbnailFile": "thumbs/27632/27639.webp"
+        },
+        {
+          "cardId": "27646",
+          "cardName": "幸福时刻",
+          "imageFile": "cards/27632/27646.webp",
+          "thumbnailFile": "thumbs/27632/27646.webp"
+        },
+        {
+          "cardId": "27653",
+          "cardName": "彩虹绵梦",
+          "imageFile": "cards/27632/27653.webp",
+          "thumbnailFile": "thumbs/27632/27653.webp"
+        },
+        {
+          "cardId": "27660",
+          "cardName": "心事不同",
+          "imageFile": "cards/27632/27660.webp",
+          "thumbnailFile": "thumbs/27632/27660.webp"
+        },
+        {
+          "cardId": "27667",
+          "cardName": "心动乐园",
+          "imageFile": "cards/27632/27667.webp",
+          "thumbnailFile": "thumbs/27632/27667.webp"
+        },
+        {
+          "cardId": "27674",
+          "cardName": "甜蜜聚会",
+          "imageFile": "cards/27632/27674.webp",
+          "thumbnailFile": "thumbs/27632/27674.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "27630",
+      "seriesName": "星塔旅人 一周年纪念 免费卡面",
+      "brand": "岭南通·羊城通",
+      "cardCount": 1,
+      "cards": [
+        {
+          "cardId": "27631",
+          "cardName": "星途一载",
+          "imageFile": "cards/27630/27631.webp",
+          "thumbnailFile": "thumbs/27630/27631.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "27588",
+      "seriesName": "星塔旅人",
+      "brand": "岭南通·羊城通",
+      "cardCount": 5,
+      "cards": [
+        {
+          "cardId": "27595",
+          "cardName": "星途启程",
+          "imageFile": "cards/27588/27595.webp",
+          "thumbnailFile": "thumbs/27588/27595.webp"
+        },
+        {
+          "cardId": "27602",
+          "cardName": "冬香",
+          "imageFile": "cards/27588/27602.webp",
+          "thumbnailFile": "thumbs/27588/27602.webp"
+        },
+        {
+          "cardId": "27609",
+          "cardName": "千都世",
+          "imageFile": "cards/27588/27609.webp",
+          "thumbnailFile": "thumbs/27588/27609.webp"
+        },
+        {
+          "cardId": "27616",
+          "cardName": "夏花",
+          "imageFile": "cards/27588/27616.webp",
+          "thumbnailFile": "thumbs/27588/27616.webp"
+        },
+        {
+          "cardId": "27623",
+          "cardName": "小禾",
+          "imageFile": "cards/27588/27623.webp",
+          "thumbnailFile": "thumbs/27588/27623.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "27539",
+      "seriesName": "王者荣耀授权-王者万象棋系列",
+      "brand": "岭南通·羊城通",
+      "cardCount": 6,
+      "cards": [
+        {
+          "cardId": "27541",
+          "cardName": "白歌款",
+          "imageFile": "cards/27539/27541.webp",
+          "thumbnailFile": "thumbs/27539/27541.webp"
+        },
+        {
+          "cardId": "27543",
+          "cardName": "香香款",
+          "imageFile": "cards/27539/27543.webp",
+          "thumbnailFile": "thumbs/27539/27543.webp"
+        },
+        {
+          "cardId": "27545",
+          "cardName": "小妲己款",
+          "imageFile": "cards/27539/27545.webp",
+          "thumbnailFile": "thumbs/27539/27545.webp"
+        },
+        {
+          "cardId": "27547",
+          "cardName": "瑶妹款",
+          "imageFile": "cards/27539/27547.webp",
+          "thumbnailFile": "thumbs/27539/27547.webp"
+        },
+        {
+          "cardId": "27549",
+          "cardName": "庄小鱼款",
+          "imageFile": "cards/27539/27549.webp",
+          "thumbnailFile": "thumbs/27539/27549.webp"
+        },
+        {
+          "cardId": "27551",
+          "cardName": "常小娥款",
+          "imageFile": "cards/27539/27551.webp",
+          "thumbnailFile": "thumbs/27539/27551.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "27504",
+      "seriesName": "迷宫饭 压马路系列",
+      "brand": "岭南通·羊城通",
+      "cardCount": 4,
+      "cards": [
+        {
+          "cardId": "27511",
+          "cardName": "Marcille",
+          "imageFile": "cards/27504/27511.webp",
+          "thumbnailFile": "thumbs/27504/27511.webp"
+        },
+        {
+          "cardId": "27518",
+          "cardName": "Laios",
+          "imageFile": "cards/27504/27518.webp",
+          "thumbnailFile": "thumbs/27504/27518.webp"
+        },
+        {
+          "cardId": "27525",
+          "cardName": "Chilchuck",
+          "imageFile": "cards/27504/27525.webp",
+          "thumbnailFile": "thumbs/27504/27525.webp"
+        },
+        {
+          "cardId": "27532",
+          "cardName": "Senshi",
+          "imageFile": "cards/27504/27532.webp",
+          "thumbnailFile": "thumbs/27504/27532.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "27454",
+      "seriesName": "觅2也是觅Too",
+      "brand": "岭南通·羊城通",
+      "cardCount": 7,
+      "cards": [
+        {
+          "cardId": "27455",
+          "cardName": "一切为了公司",
+          "imageFile": "cards/27454/27455.webp",
+          "thumbnailFile": "thumbs/27454/27455.webp"
+        },
+        {
+          "cardId": "27462",
+          "cardName": "一点不挤",
+          "imageFile": "cards/27454/27462.webp",
+          "thumbnailFile": "thumbs/27454/27462.webp"
+        },
+        {
+          "cardId": "27469",
+          "cardName": "一切都好",
+          "imageFile": "cards/27454/27469.webp",
+          "thumbnailFile": "thumbs/27454/27469.webp"
+        },
+        {
+          "cardId": "27476",
+          "cardName": "大Bee兜",
+          "imageFile": "cards/27454/27476.webp",
+          "thumbnailFile": "thumbs/27454/27476.webp"
+        },
+        {
+          "cardId": "27483",
+          "cardName": "岁月静好",
+          "imageFile": "cards/27454/27483.webp",
+          "thumbnailFile": "thumbs/27454/27483.webp"
+        },
+        {
+          "cardId": "27490",
+          "cardName": "开不完的会",
+          "imageFile": "cards/27454/27490.webp",
+          "thumbnailFile": "thumbs/27454/27490.webp"
+        },
+        {
+          "cardId": "27497",
+          "cardName": "这班非上",
+          "imageFile": "cards/27454/27497.webp",
+          "thumbnailFile": "thumbs/27454/27497.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "27399",
+      "seriesName": "绿梦：时空之声 系列三",
+      "brand": "岭南通·羊城通",
+      "cardCount": 6,
+      "cards": [
+        {
+          "cardId": "27406",
+          "cardName": "莉特莉丝-绮夜寐影",
+          "imageFile": "cards/27399/27406.webp",
+          "thumbnailFile": "thumbs/27399/27406.webp"
+        },
+        {
+          "cardId": "27413",
+          "cardName": "莉特莉丝",
+          "imageFile": "cards/27399/27413.webp",
+          "thumbnailFile": "thumbs/27399/27413.webp"
+        },
+        {
+          "cardId": "27420",
+          "cardName": "弗莉兹",
+          "imageFile": "cards/27399/27420.webp",
+          "thumbnailFile": "thumbs/27399/27420.webp"
+        },
+        {
+          "cardId": "27427",
+          "cardName": "璃琅",
+          "imageFile": "cards/27399/27427.webp",
+          "thumbnailFile": "thumbs/27399/27427.webp"
+        },
+        {
+          "cardId": "27434",
+          "cardName": "塔可",
+          "imageFile": "cards/27399/27434.webp",
+          "thumbnailFile": "thumbs/27399/27434.webp"
+        },
+        {
+          "cardId": "27441",
+          "cardName": "玛塔",
+          "imageFile": "cards/27399/27441.webp",
+          "thumbnailFile": "thumbs/27399/27441.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "27350",
+      "seriesName": "绿梦：时空之声 系列二",
+      "brand": "岭南通·羊城通",
+      "cardCount": 6,
+      "cards": [
+        {
+          "cardId": "27357",
+          "cardName": "何雨莲-往日伴奏",
+          "imageFile": "cards/27350/27357.webp",
+          "thumbnailFile": "thumbs/27350/27357.webp"
+        },
+        {
+          "cardId": "27364",
+          "cardName": "何雨莲",
+          "imageFile": "cards/27350/27364.webp",
+          "thumbnailFile": "thumbs/27350/27364.webp"
+        },
+        {
+          "cardId": "27371",
+          "cardName": "布雷兹",
+          "imageFile": "cards/27350/27371.webp",
+          "thumbnailFile": "thumbs/27350/27371.webp"
+        },
+        {
+          "cardId": "27378",
+          "cardName": "海拉",
+          "imageFile": "cards/27350/27378.webp",
+          "thumbnailFile": "thumbs/27350/27378.webp"
+        },
+        {
+          "cardId": "27385",
+          "cardName": "阿萌",
+          "imageFile": "cards/27350/27385.webp",
+          "thumbnailFile": "thumbs/27350/27385.webp"
+        },
+        {
+          "cardId": "27392",
+          "cardName": "洛夕",
+          "imageFile": "cards/27350/27392.webp",
+          "thumbnailFile": "thumbs/27350/27392.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "27336",
+      "seriesName": "绿梦：时空之声 系列一",
+      "brand": "岭南通·羊城通",
+      "cardCount": 1,
+      "cards": [
+        {
+          "cardId": "27343",
+          "cardName": "群像",
+          "imageFile": "cards/27336/27343.webp",
+          "thumbnailFile": "thumbs/27336/27343.webp"
+        }
+      ]
+    },
     {
       "seriesId": "27315",
       "seriesName": "红肠狗ONEONE",
@@ -125,50 +705,6 @@
           "cardName": "巫心-拖延者",
           "imageFile": "cards/27300/27313.webp",
           "thumbnailFile": "thumbs/27300/27313.webp"
-        }
-      ]
-    },
-    {
-      "seriesId": "27271",
-      "seriesName": "王者荣耀授权-王者万象棋系列",
-      "brand": "岭南通·羊城通",
-      "cardCount": 6,
-      "cards": [
-        {
-          "cardId": "27274",
-          "cardName": "白歌款",
-          "imageFile": "cards/27271/27274.webp",
-          "thumbnailFile": "thumbs/27271/27274.webp"
-        },
-        {
-          "cardId": "27276",
-          "cardName": "香香款",
-          "imageFile": "cards/27271/27276.webp",
-          "thumbnailFile": "thumbs/27271/27276.webp"
-        },
-        {
-          "cardId": "27278",
-          "cardName": "小妲己款",
-          "imageFile": "cards/27271/27278.webp",
-          "thumbnailFile": "thumbs/27271/27278.webp"
-        },
-        {
-          "cardId": "27280",
-          "cardName": "瑶妹款",
-          "imageFile": "cards/27271/27280.webp",
-          "thumbnailFile": "thumbs/27271/27280.webp"
-        },
-        {
-          "cardId": "27282",
-          "cardName": "庄小鱼款",
-          "imageFile": "cards/27271/27282.webp",
-          "thumbnailFile": "thumbs/27271/27282.webp"
-        },
-        {
-          "cardId": "27284",
-          "cardName": "常小娥款",
-          "imageFile": "cards/27271/27284.webp",
-          "thumbnailFile": "thumbs/27271/27284.webp"
         }
       ]
     },
@@ -953,58 +1489,6 @@
       ]
     },
     {
-      "seriesId": "26943",
-      "seriesName": "宝可梦30周年 最初的伙伴 神奥地区",
-      "brand": "岭南通·羊城通",
-      "cardCount": 3,
-      "cards": [
-        {
-          "cardId": "26971",
-          "cardName": "草苗龟",
-          "imageFile": "cards/26943/26971.webp",
-          "thumbnailFile": "thumbs/26943/26971.webp"
-        },
-        {
-          "cardId": "26972",
-          "cardName": "小火焰猴",
-          "imageFile": "cards/26943/26972.webp",
-          "thumbnailFile": "thumbs/26943/26972.webp"
-        },
-        {
-          "cardId": "26973",
-          "cardName": "波加曼",
-          "imageFile": "cards/26943/26973.webp",
-          "thumbnailFile": "thumbs/26943/26973.webp"
-        }
-      ]
-    },
-    {
-      "seriesId": "26942",
-      "seriesName": "宝可梦30周年 最初的伙伴 丰缘地区",
-      "brand": "岭南通·羊城通",
-      "cardCount": 3,
-      "cards": [
-        {
-          "cardId": "26944",
-          "cardName": "火稚鸡",
-          "imageFile": "cards/26942/26944.webp",
-          "thumbnailFile": "thumbs/26942/26944.webp"
-        },
-        {
-          "cardId": "26945",
-          "cardName": "木守宫",
-          "imageFile": "cards/26942/26945.webp",
-          "thumbnailFile": "thumbs/26942/26945.webp"
-        },
-        {
-          "cardId": "26946",
-          "cardName": "水跃鱼",
-          "imageFile": "cards/26942/26946.webp",
-          "thumbnailFile": "thumbs/26942/26946.webp"
-        }
-      ]
-    },
-    {
       "seriesId": "26941",
       "seriesName": "宝可梦30周年 什么是你的最爱？A款",
       "brand": "岭南通·羊城通",
@@ -1465,6 +1949,84 @@
           "cardName": "雅雅",
           "imageFile": "cards/26771/26780.webp",
           "thumbnailFile": "thumbs/26771/26780.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "26943",
+      "seriesName": "宝可梦30周年 最初的伙伴 神奥地区",
+      "brand": "岭南通·羊城通",
+      "cardCount": 3,
+      "cards": [
+        {
+          "cardId": "26971",
+          "cardName": "草苗龟",
+          "imageFile": "cards/26943/26971.webp",
+          "thumbnailFile": "thumbs/26943/26971.webp"
+        },
+        {
+          "cardId": "26972",
+          "cardName": "小火焰猴",
+          "imageFile": "cards/26943/26972.webp",
+          "thumbnailFile": "thumbs/26943/26972.webp"
+        },
+        {
+          "cardId": "26973",
+          "cardName": "波加曼",
+          "imageFile": "cards/26943/26973.webp",
+          "thumbnailFile": "thumbs/26943/26973.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "26942",
+      "seriesName": "宝可梦30周年 最初的伙伴 丰缘地区",
+      "brand": "岭南通·羊城通",
+      "cardCount": 3,
+      "cards": [
+        {
+          "cardId": "26944",
+          "cardName": "火稚鸡",
+          "imageFile": "cards/26942/26944.webp",
+          "thumbnailFile": "thumbs/26942/26944.webp"
+        },
+        {
+          "cardId": "26945",
+          "cardName": "木守宫",
+          "imageFile": "cards/26942/26945.webp",
+          "thumbnailFile": "thumbs/26942/26945.webp"
+        },
+        {
+          "cardId": "26946",
+          "cardName": "水跃鱼",
+          "imageFile": "cards/26942/26946.webp",
+          "thumbnailFile": "thumbs/26942/26946.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "26936",
+      "seriesName": "宝可梦30周年 最初的伙伴 城都地区",
+      "brand": "岭南通·羊城通",
+      "cardCount": 3,
+      "cards": [
+        {
+          "cardId": "26937",
+          "cardName": "菊草叶",
+          "imageFile": "cards/26936/26937.webp",
+          "thumbnailFile": "thumbs/26936/26937.webp"
+        },
+        {
+          "cardId": "26938",
+          "cardName": "火球鼠",
+          "imageFile": "cards/26936/26938.webp",
+          "thumbnailFile": "thumbs/26936/26938.webp"
+        },
+        {
+          "cardId": "26939",
+          "cardName": "小锯鳄",
+          "imageFile": "cards/26936/26939.webp",
+          "thumbnailFile": "thumbs/26936/26939.webp"
         }
       ]
     },
@@ -1953,32 +2515,6 @@
       ]
     },
     {
-      "seriesId": "26936",
-      "seriesName": "宝可梦30周年 最初的伙伴 城都地区",
-      "brand": "岭南通·羊城通",
-      "cardCount": 3,
-      "cards": [
-        {
-          "cardId": "26937",
-          "cardName": "菊草叶",
-          "imageFile": "cards/26936/26937.webp",
-          "thumbnailFile": "thumbs/26936/26937.webp"
-        },
-        {
-          "cardId": "26938",
-          "cardName": "火球鼠",
-          "imageFile": "cards/26936/26938.webp",
-          "thumbnailFile": "thumbs/26936/26938.webp"
-        },
-        {
-          "cardId": "26939",
-          "cardName": "小锯鳄",
-          "imageFile": "cards/26936/26939.webp",
-          "thumbnailFile": "thumbs/26936/26939.webp"
-        }
-      ]
-    },
-    {
       "seriesId": "26392",
       "seriesName": "醒神仔夏日特辑",
       "brand": "岭南通·羊城通",
@@ -2159,50 +2695,6 @@
           "cardName": "懒灰好朋友",
           "imageFile": "cards/26345/26367.webp",
           "thumbnailFile": "thumbs/26345/26367.webp"
-        }
-      ]
-    },
-    {
-      "seriesId": "26296",
-      "seriesName": "EXO 联名全国交通卡",
-      "brand": "岭南通·羊城通",
-      "cardCount": 6,
-      "cards": [
-        {
-          "cardId": "26303",
-          "cardName": "EXO",
-          "imageFile": "cards/26296/26303.webp",
-          "thumbnailFile": "thumbs/26296/26303.webp"
-        },
-        {
-          "cardId": "26310",
-          "cardName": "SUHO",
-          "imageFile": "cards/26296/26310.webp",
-          "thumbnailFile": "thumbs/26296/26310.webp"
-        },
-        {
-          "cardId": "26317",
-          "cardName": "CHANYEOL",
-          "imageFile": "cards/26296/26317.webp",
-          "thumbnailFile": "thumbs/26296/26317.webp"
-        },
-        {
-          "cardId": "26324",
-          "cardName": "D.O.",
-          "imageFile": "cards/26296/26324.webp",
-          "thumbnailFile": "thumbs/26296/26324.webp"
-        },
-        {
-          "cardId": "26331",
-          "cardName": "KAI",
-          "imageFile": "cards/26296/26331.webp",
-          "thumbnailFile": "thumbs/26296/26331.webp"
-        },
-        {
-          "cardId": "26338",
-          "cardName": "SEHUN",
-          "imageFile": "cards/26296/26338.webp",
-          "thumbnailFile": "thumbs/26296/26338.webp"
         }
       ]
     },
@@ -6397,50 +6889,6 @@
           "cardName": "嬴政",
           "imageFile": "cards/22243/22254.webp",
           "thumbnailFile": "thumbs/22243/22254.webp"
-        }
-      ]
-    },
-    {
-      "seriesId": "22236",
-      "seriesName": "战双帕弥什 六周年纪念交通卡",
-      "brand": "岭南通·羊城通",
-      "cardCount": 6,
-      "cards": [
-        {
-          "cardId": "22237",
-          "cardName": "丽芙·霁梦",
-          "imageFile": "cards/22236/22237.webp",
-          "thumbnailFile": "thumbs/22236/22237.webp"
-        },
-        {
-          "cardId": "22238",
-          "cardName": "露西亚·誓焰",
-          "imageFile": "cards/22236/22238.webp",
-          "thumbnailFile": "thumbs/22236/22238.webp"
-        },
-        {
-          "cardId": "22239",
-          "cardName": "里·超刻",
-          "imageFile": "cards/22236/22239.webp",
-          "thumbnailFile": "thumbs/22236/22239.webp"
-        },
-        {
-          "cardId": "22240",
-          "cardName": "赛琳娜·希声",
-          "imageFile": "cards/22236/22240.webp",
-          "thumbnailFile": "thumbs/22236/22240.webp"
-        },
-        {
-          "cardId": "22241",
-          "cardName": "比安卡·晖暮",
-          "imageFile": "cards/22236/22241.webp",
-          "thumbnailFile": "thumbs/22236/22241.webp"
-        },
-        {
-          "cardId": "22242",
-          "cardName": "万事·明晰梦",
-          "imageFile": "cards/22236/22242.webp",
-          "thumbnailFile": "thumbs/22236/22242.webp"
         }
       ]
     },
