@@ -42,6 +42,7 @@ FULL_IMAGE_WIDTH = 1600
 THUMBNAIL_WIDTH = 640
 FULL_IMAGE_QUALITY = 86
 THUMBNAIL_QUALITY = 78
+SCHEMA_VERSION = 3
 
 
 class SyncError(RuntimeError):
@@ -53,6 +54,12 @@ class SyncStats:
     downloaded: int = 0
     existing: int = 0
     removed: int = 0
+    newly_deprecated_series: int = 0
+    newly_deprecated_cards: int = 0
+    restored_series: int = 0
+    restored_cards: int = 0
+    superseded_series: int = 0
+    superseded_cards: int = 0
 
 
 def _utc_now() -> str:
@@ -257,21 +264,69 @@ def _load_existing_data(data_path: Path) -> dict[str, Any] | None:
     return payload
 
 
-def _previous_ids(existing: dict[str, Any] | None) -> tuple[set[str], set[str]]:
-    series_ids: set[str] = set()
-    card_ids: set[str] = set()
+def _previous_catalog(
+    existing: dict[str, Any] | None,
+) -> tuple[set[str], set[str], set[str], dict[str, dict[str, Any]]]:
+    all_series_ids: set[str] = set()
+    active_series_ids: set[str] = set()
+    all_card_ids: set[str] = set()
+    series_by_id: dict[str, dict[str, Any]] = {}
     if not existing:
-        return series_ids, card_ids
+        return all_series_ids, active_series_ids, all_card_ids, series_by_id
 
     for series in existing.get("series", []):
         series_id = str(series.get("seriesId", ""))
-        if series_id:
-            series_ids.add(series_id)
+        if not series_id:
+            continue
+        all_series_ids.add(series_id)
+        if not series.get("deprecated"):
+            active_series_ids.add(series_id)
+        series_by_id[series_id] = series
         for card in series.get("cards", []):
             card_id = str(card.get("cardId", ""))
             if card_id:
-                card_ids.add(card_id)
-    return series_ids, card_ids
+                all_card_ids.add(card_id)
+    return all_series_ids, active_series_ids, all_card_ids, series_by_id
+
+
+def _sha256_file(path: Path) -> str | None:
+    if not path.is_file():
+        return None
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(65536), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _card_signature(card: dict[str, Any], output_dir: Path) -> tuple[str, str] | None:
+    relative_path = str(card.get("imageFile", ""))
+    if not relative_path:
+        return None
+    asset_path = _resolve_public_asset(output_dir, relative_path)
+    digest = _sha256_file(asset_path)
+    if digest is None:
+        return None
+    return (str(card.get("cardName", "")), digest)
+
+
+def _series_signature(
+    series: dict[str, Any], output_dir: Path
+) -> tuple[str, str, tuple[tuple[str, str], ...]] | None:
+    cards = series.get("cards")
+    if not isinstance(cards, list) or not cards:
+        return None
+    card_sigs: list[tuple[str, str]] = []
+    for card in cards:
+        sig = _card_signature(card, output_dir)
+        if sig is None:
+            return None
+        card_sigs.append(sig)
+    return (
+        str(series.get("seriesName", "")),
+        str(series.get("brand", "")),
+        tuple(sorted(card_sigs)),
+    )
 
 
 def _asset_paths(output_dir: Path, series_id: str, card_id: str) -> tuple[Path, Path]:
@@ -357,6 +412,211 @@ def _resolve_public_asset(output_dir: Path, relative_path: str) -> Path:
     return candidate
 
 
+def _numeric_series_id(series_id: str) -> int | None:
+    return int(series_id) if series_id.isdigit() else None
+
+
+def _insert_series_in_order(
+    series_list: list[dict[str, Any]], archived: dict[str, Any]
+) -> None:
+    target_num = _numeric_series_id(str(archived.get("seriesId", "")))
+    if target_num is not None:
+        for index, current in enumerate(series_list):
+            current_num = _numeric_series_id(str(current.get("seriesId", "")))
+            if current_num is not None and current_num < target_num:
+                series_list.insert(index, archived)
+                return
+    series_list.append(archived)
+
+
+def _archive_card_record(
+    old_card: dict[str, Any], deprecated_at: str
+) -> dict[str, Any]:
+    return {
+        "cardId": str(old_card.get("cardId", "")),
+        "cardName": str(old_card.get("cardName") or "Unnamed card"),
+        "deprecated": True,
+        "deprecatedAt": deprecated_at,
+        "imageFile": str(old_card.get("imageFile", "")),
+        "thumbnailFile": str(old_card.get("thumbnailFile", "")),
+    }
+
+
+def _archive_deprecated_series(
+    old_series: dict[str, Any],
+    seen_card_ids: set[str],
+    now: str,
+    stats: SyncStats,
+) -> dict[str, Any] | None:
+    series_deprecated_at = str(old_series.get("deprecatedAt") or "") or now
+    archived_cards: list[dict[str, Any]] = []
+    for old_card in old_series.get("cards", []):
+        card_id = str(old_card.get("cardId", ""))
+        if not card_id or card_id in seen_card_ids:
+            continue
+        seen_card_ids.add(card_id)
+        card_deprecated_at = str(old_card.get("deprecatedAt") or "") or series_deprecated_at
+        if not old_card.get("deprecated"):
+            stats.newly_deprecated_cards += 1
+        archived_cards.append(_archive_card_record(old_card, card_deprecated_at))
+
+    if not archived_cards:
+        return None
+    if not old_series.get("deprecated"):
+        stats.newly_deprecated_series += 1
+    return {
+        "seriesId": str(old_series.get("seriesId", "")),
+        "seriesName": str(old_series.get("seriesName", "")),
+        "brand": str(old_series.get("brand", "")),
+        "deprecated": True,
+        "deprecatedAt": series_deprecated_at,
+        "cardCount": len(archived_cards),
+        "cards": archived_cards,
+    }
+
+
+def _merge_deprecated_cards_into_active_series(
+    live_series: dict[str, Any],
+    old_series: dict[str, Any],
+    seen_card_ids: set[str],
+    output_dir: Path,
+    now: str,
+    stats: SyncStats,
+) -> None:
+    if old_series.get("deprecated"):
+        stats.restored_series += 1
+
+    live_card_ids_in_series = {str(card["cardId"]) for card in live_series["cards"]}
+    live_card_sigs = {
+        sig
+        for sig in (_card_signature(card, output_dir) for card in live_series["cards"])
+        if sig is not None
+    }
+
+    for old_card in old_series.get("cards", []):
+        old_card_id = str(old_card.get("cardId", ""))
+        if not old_card_id:
+            continue
+        if old_card_id in live_card_ids_in_series:
+            if old_card.get("deprecated"):
+                stats.restored_cards += 1
+            continue
+        if old_card_id in seen_card_ids:
+            continue
+        old_sig = _card_signature(old_card, output_dir)
+        if old_sig is not None and old_sig in live_card_sigs:
+            stats.superseded_cards += 1
+            continue
+        seen_card_ids.add(old_card_id)
+        card_deprecated_at = str(old_card.get("deprecatedAt") or "") or now
+        if not old_card.get("deprecated"):
+            stats.newly_deprecated_cards += 1
+        live_series["cards"].append(_archive_card_record(old_card, card_deprecated_at))
+
+    live_series["cardCount"] = len(live_series["cards"])
+
+
+def build_merged_catalog(
+    live_series: list[dict[str, Any]],
+    existing: dict[str, Any] | None,
+    output_dir: Path,
+    now: str,
+    stats: SyncStats,
+) -> dict[str, Any]:
+    """Merge live catalog series with previously archived series and cards."""
+    all_previous_series_ids, _, all_previous_card_ids, existing_series_by_id = (
+        _previous_catalog(existing)
+    )
+    live_series_ids = {str(series["seriesId"]) for series in live_series}
+    live_card_ids_initial = {
+        str(card["cardId"])
+        for series in live_series
+        for card in series["cards"]
+    }
+    seen_card_ids = set(live_card_ids_initial)
+
+    output_series: list[dict[str, Any]] = []
+    for series in live_series:
+        series_copy = {
+            "seriesId": str(series["seriesId"]),
+            "seriesName": str(series["seriesName"]),
+            "brand": str(series.get("brand", "")),
+            "cardCount": len(series["cards"]),
+            "cards": [dict(card) for card in series["cards"]],
+        }
+        old_series = existing_series_by_id.get(series_copy["seriesId"])
+        if old_series is not None:
+            _merge_deprecated_cards_into_active_series(
+                live_series=series_copy,
+                old_series=old_series,
+                seen_card_ids=seen_card_ids,
+                output_dir=output_dir,
+                now=now,
+                stats=stats,
+            )
+        output_series.append(series_copy)
+
+    live_signatures: dict[tuple[str, str, tuple[tuple[str, str], ...]], set[str]] = {}
+    for series in live_series:
+        sig = _series_signature(series, output_dir)
+        if sig is not None:
+            live_signatures.setdefault(sig, set()).add(str(series["seriesId"]))
+
+    if existing:
+        for old_series in existing.get("series", []):
+            old_sid = str(old_series.get("seriesId", ""))
+            if not old_sid or old_sid in live_series_ids:
+                continue
+            sig = _series_signature(old_series, output_dir)
+            if sig is not None and any(
+                sid != old_sid for sid in live_signatures.get(sig, ())
+            ):
+                stats.superseded_series += 1
+                stats.superseded_cards += len(old_series.get("cards", []))
+                continue
+            archived = _archive_deprecated_series(old_series, seen_card_ids, now, stats)
+            if archived is not None:
+                _insert_series_in_order(output_series, archived)
+
+    total_series = len(output_series)
+    total_cards = sum(len(series["cards"]) for series in output_series)
+    deprecated_series = sum(1 for series in output_series if series.get("deprecated"))
+    deprecated_cards = sum(
+        1
+        for series in output_series
+        for card in series["cards"]
+        if card.get("deprecated")
+    )
+
+    return {
+        "schemaVersion": SCHEMA_VERSION,
+        "generatedAt": now,
+        "source": {
+            "scope": "merged anonymous catalog archive (active + deprecated)",
+            "cityCode": "01",
+            "ctp": "05",
+            "suitChannel": "4",
+        },
+        "totalSeries": total_series,
+        "totalCards": total_cards,
+        "activeSeries": total_series - deprecated_series,
+        "activeCards": total_cards - deprecated_cards,
+        "deprecatedSeries": deprecated_series,
+        "deprecatedCards": deprecated_cards,
+        "sync": {
+            "newSeries": len(live_series_ids - all_previous_series_ids),
+            "newCards": len(live_card_ids_initial - all_previous_card_ids),
+            "newlyDeprecatedSeries": stats.newly_deprecated_series,
+            "newlyDeprecatedCards": stats.newly_deprecated_cards,
+            "restoredSeries": stats.restored_series,
+            "restoredCards": stats.restored_cards,
+            "supersededSeries": stats.superseded_series,
+            "supersededCards": stats.superseded_cards,
+        },
+        "series": output_series,
+    }
+
+
 def validate_gallery(data: dict[str, Any], output_dir: Path) -> None:
     series_list = data.get("series")
     if not isinstance(series_list, list) or not series_list:
@@ -364,11 +624,17 @@ def validate_gallery(data: dict[str, Any], output_dir: Path) -> None:
 
     series_ids: set[str] = set()
     card_ids: set[str] = set()
+    deprecated_series = 0
+    deprecated_cards = 0
     for series in series_list:
         series_id = str(series.get("seriesId", ""))
         if not series_id or series_id in series_ids:
             raise SyncError(f"Missing or duplicate series ID: {series_id!r}")
         series_ids.add(series_id)
+
+        is_series_deprecated = bool(series.get("deprecated"))
+        if is_series_deprecated:
+            deprecated_series += 1
 
         cards = series.get("cards")
         if not isinstance(cards, list) or int(series.get("cardCount", -1)) != len(cards):
@@ -378,6 +644,15 @@ def validate_gallery(data: dict[str, Any], output_dir: Path) -> None:
             if not card_id or card_id in card_ids:
                 raise SyncError(f"Missing or duplicate card ID: {card_id!r}")
             card_ids.add(card_id)
+
+            is_card_deprecated = bool(card.get("deprecated"))
+            if is_series_deprecated and not is_card_deprecated:
+                raise SyncError(
+                    f"Deprecated series {series_id} contains non-deprecated card {card_id}"
+                )
+            if is_card_deprecated:
+                deprecated_cards += 1
+
             for field in ("imageFile", "thumbnailFile"):
                 relative_path = str(card.get(field, ""))
                 asset_path = _resolve_public_asset(output_dir, relative_path)
@@ -388,6 +663,15 @@ def validate_gallery(data: dict[str, Any], output_dir: Path) -> None:
         "totalSeries": len(series_list),
         "totalCards": len(card_ids),
     }
+    if int(data.get("schemaVersion", 2)) >= 3:
+        checks.update(
+            {
+                "activeSeries": len(series_list) - deprecated_series,
+                "activeCards": len(card_ids) - deprecated_cards,
+                "deprecatedSeries": deprecated_series,
+                "deprecatedCards": deprecated_cards,
+            }
+        )
     for field, expected in checks.items():
         if int(data.get(field, -1)) != expected:
             raise SyncError(f"Summary field {field} should be {expected}, got {data.get(field)}")
@@ -456,7 +740,7 @@ def sync_gallery(args: argparse.Namespace) -> dict[str, Any]:
     output_dir: Path = args.output_dir
     data_path = output_dir / "data.json"
     existing = _load_existing_data(data_path)
-    previous_series_ids, previous_card_ids = _previous_ids(existing)
+    _, previous_active_series_ids, _, _ = _previous_catalog(existing)
 
     if not features.check("webp"):
         raise SyncError("The installed Pillow build does not support WebP")
@@ -471,17 +755,17 @@ def sync_gallery(args: argparse.Namespace) -> dict[str, Any]:
         live_ids = {_series_id(series) for series in live_metadata}
 
         if (
-            previous_series_ids
-            and len(live_ids) < len(previous_series_ids) * MIN_ACTIVE_SERIES_RATIO
+            previous_active_series_ids
+            and len(live_ids) < len(previous_active_series_ids) * MIN_ACTIVE_SERIES_RATIO
             and not args.allow_large_shrink
         ):
             raise SyncError(
                 "The active series count dropped from "
-                f"{len(previous_series_ids)} to {len(live_ids)}. "
+                f"{len(previous_active_series_ids)} to {len(live_ids)}. "
                 "Use --allow-large-shrink after verifying the API response."
             )
 
-        output_series: list[dict[str, Any]] = []
+        live_series: list[dict[str, Any]] = []
         seen_card_ids: set[str] = set()
 
         for index, metadata in enumerate(live_metadata, 1):
@@ -536,36 +820,17 @@ def sync_gallery(args: argparse.Namespace) -> dict[str, Any]:
                 "cardCount": len(cards),
                 "cards": cards,
             }
-            output_series.append(record)
+            live_series.append(record)
             print(f"[{index}/{len(live_metadata)}] {name}: {len(cards)} cards", flush=True)
             time.sleep(client.request_delay)
 
-        active_cards = sum(len(series["cards"]) for series in output_series)
-        current_card_ids = {
-            str(card["cardId"])
-            for series in output_series
-            for card in series["cards"]
-        }
-
-        output_data = {
-            "schemaVersion": 2,
-            "generatedAt": now,
-            "source": {
-                "scope": "current anonymous catalog response",
-                "cityCode": "01",
-                "ctp": "05",
-                "suitChannel": "4",
-            },
-            "totalSeries": len(output_series),
-            "totalCards": active_cards,
-            "sync": {
-                "newSeries": len(live_ids - previous_series_ids),
-                "newCards": len(current_card_ids - previous_card_ids),
-                "removedSeries": len(previous_series_ids - live_ids),
-                "removedCards": len(previous_card_ids - current_card_ids),
-            },
-            "series": output_series,
-        }
+        output_data = build_merged_catalog(
+            live_series=live_series,
+            existing=existing,
+            output_dir=output_dir,
+            now=now,
+            stats=stats,
+        )
         validate_gallery(output_data, output_dir)
         if (
             existing
@@ -583,8 +848,8 @@ def sync_gallery(args: argparse.Namespace) -> dict[str, Any]:
     if output_data is None:
         raise SyncError("Sync ended before output data was generated")
     print("\nSync complete", flush=True)
-    print(f"  series:              {output_data['totalSeries']}")
-    print(f"  cards:               {output_data['totalCards']}")
+    print(f"  series:              {output_data['totalSeries']} (active: {output_data['activeSeries']}, deprecated: {output_data['deprecatedSeries']})")
+    print(f"  cards:               {output_data['totalCards']} (active: {output_data['activeCards']}, deprecated: {output_data['deprecatedCards']})")
     print(f"  downloaded images:   {stats.downloaded}")
     print(f"  existing WebP pairs: {stats.existing}")
     print(f"  removed stale WebP:  {stats.removed}")

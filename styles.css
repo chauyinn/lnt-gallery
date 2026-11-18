@@ -21,6 +21,10 @@
 
   --accent: #2563eb;
   --accent-bg: rgba(37, 99, 235, 0.08);
+  --deprecated-text: #be123c;
+  --deprecated-bg: rgba(244, 63, 94, 0.09);
+  --deprecated-border: rgba(244, 63, 94, 0.24);
+  --deprecated-surface: #fffafb;
 
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
   --shadow-card: 0 1px 4px rgba(15, 23, 42, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.04);
@@ -242,7 +246,94 @@ button:focus-visible {
   max-width: var(--content-max);
   min-height: calc(100vh - 140px);
   margin: 0 auto;
-  padding: 32px 28px 72px;
+  padding: 28px 28px 72px;
+}
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.status-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+}
+
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: background-color var(--transition), color var(--transition), box-shadow var(--transition);
+}
+
+.filter-pill:hover {
+  color: var(--text-primary);
+}
+
+.filter-pill.active {
+  background: #ffffff;
+  color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+.filter-pill[data-filter="deprecated"].active {
+  color: var(--deprecated-text);
+}
+
+.filter-count {
+  padding: 1px 6px;
+  border-radius: 99px;
+  background: rgba(15, 23, 42, 0.05);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.filter-pill.active .filter-count {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.filter-pill[data-filter="deprecated"].active .filter-count {
+  background: var(--deprecated-bg);
+  color: var(--deprecated-text);
+}
+
+.archive-note {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border-radius: 99px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.status-badge--deprecated {
+  color: var(--deprecated-text);
+  background: var(--deprecated-bg);
+  border: 1px solid var(--deprecated-border);
 }
 
 .series-section {
@@ -253,6 +344,7 @@ button:focus-visible {
 .series-header {
   display: flex;
   align-items: baseline;
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 14px;
   padding-bottom: 8px;
@@ -265,6 +357,10 @@ button:focus-visible {
   color: var(--text-primary);
 }
 
+.series-section.is-deprecated .series-title {
+  color: var(--text-secondary);
+}
+
 .series-count {
   font-size: 0.76rem;
   font-weight: 600;
@@ -272,6 +368,11 @@ button:focus-visible {
   background: var(--bg-elevated);
   padding: 2px 8px;
   border-radius: 99px;
+}
+
+.series-deprecated-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
 }
 
 .series-grid {
@@ -299,6 +400,16 @@ button:focus-visible {
   box-shadow: var(--shadow-hover);
 }
 
+.card-item.is-deprecated {
+  border-style: dashed;
+  border-color: rgba(244, 63, 94, 0.28);
+  background: var(--deprecated-surface);
+}
+
+.card-item.is-deprecated:hover {
+  border-color: rgba(244, 63, 94, 0.45);
+}
+
 .card-img-wrap {
   position: relative;
   width: 100%;
@@ -314,20 +425,36 @@ button:focus-visible {
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, filter var(--transition);
 }
 
 .card-img-wrap img.loaded {
   opacity: 1;
 }
 
+.card-item.is-deprecated .card-img-wrap img.loaded {
+  filter: saturate(0.82);
+  opacity: 0.92;
+}
+
+.card-item.is-deprecated:hover .card-img-wrap img.loaded {
+  filter: saturate(1);
+  opacity: 1;
+}
+
 .card-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
   padding: 9px 12px;
   border-top: 1px solid var(--border);
-  background: var(--bg-card);
+  background: inherit;
 }
 
 .card-name {
+  flex: 1 1 auto;
+  min-width: 0;
   display: block;
   font-size: 0.8rem;
   font-weight: 500;
@@ -335,6 +462,11 @@ button:focus-visible {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.card-status-badge {
+  padding: 1px 6px;
+  font-size: 0.68rem;
 }
 
 .card-item:hover .card-name {
@@ -391,6 +523,8 @@ button:focus-visible {
   font-weight: 600;
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 8px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }

@@ -6,12 +6,19 @@
     searchClear: document.getElementById('searchClear'),
     seriesCount: document.getElementById('seriesCount'),
     cardCount: document.getElementById('cardCount'),
+    filterBar: document.getElementById('filterBar'),
+    filterButtons: Array.from(document.querySelectorAll('.filter-pill')),
+    countAll: document.getElementById('countAll'),
+    countActive: document.getElementById('countActive'),
+    countDeprecated: document.getElementById('countDeprecated'),
+    archiveNote: document.getElementById('archiveNote'),
     loading: document.getElementById('loadingState'),
     empty: document.getElementById('emptyState'),
     container: document.getElementById('seriesContainer'),
     lightbox: document.getElementById('lightbox'),
     lightboxClose: document.getElementById('lightboxClose'),
     lightboxImg: document.getElementById('lightboxImg'),
+    lightboxBadge: document.getElementById('lightboxBadge'),
     lightboxTitle: document.getElementById('lightboxTitle'),
     lightboxSub: document.getElementById('lightboxSub'),
     backToTop: document.getElementById('backToTop'),
@@ -19,8 +26,28 @@
 
   let allSeries = [];
   let seriesSections = [];
+  let currentFilter = 'all';
   let lastTriggerElement = null;
   let imageObserver = null;
+
+  function formatDate(isoString) {
+    if (!isoString) return '';
+    const date = new Date(isoString);
+    if (Number.isNaN(date.getTime())) return String(isoString).slice(0, 10);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  function createDeprecatedBadge(extraClass = '') {
+    const badge = document.createElement('span');
+    badge.className = extraClass
+      ? `status-badge status-badge--deprecated ${extraClass}`
+      : 'status-badge status-badge--deprecated';
+    badge.textContent = '已下架';
+    return badge;
+  }
 
   function assetUrl(relativePath) {
     if (!relativePath) return '';
@@ -46,10 +73,16 @@
 
   function openLightbox(card, series, trigger) {
     lastTriggerElement = trigger;
+    const isDeprecated = Boolean(card.deprecated || series.deprecated);
+    const deprecatedDate = formatDate(card.deprecatedAt || series.deprecatedAt);
+
     elements.lightboxImg.src = assetUrl(card.imageFile);
     elements.lightboxImg.alt = card.cardName;
+    elements.lightboxBadge.hidden = !isDeprecated;
     elements.lightboxTitle.textContent = card.cardName;
-    elements.lightboxSub.textContent = series.seriesName;
+    elements.lightboxSub.textContent = isDeprecated && deprecatedDate
+      ? `${series.seriesName} · 下架归档于 ${deprecatedDate}`
+      : series.seriesName;
     elements.lightbox.classList.add('active');
     elements.lightbox.setAttribute('aria-hidden', 'false');
     document.body.classList.add('lightbox-open');
@@ -66,10 +99,14 @@
   }
 
   function createCard(card, series) {
+    const isDeprecated = Boolean(card.deprecated || series.deprecated);
     const button = document.createElement('button');
     button.type = 'button';
-    button.className = 'card-item';
-    button.setAttribute('aria-label', `查看卡面：${card.cardName}`);
+    button.className = isDeprecated ? 'card-item is-deprecated' : 'card-item';
+    button.setAttribute(
+      'aria-label',
+      isDeprecated ? `查看卡面（已下架）：${card.cardName}` : `查看卡面：${card.cardName}`,
+    );
 
     const imgWrap = document.createElement('div');
     imgWrap.className = 'card-img-wrap';
@@ -90,16 +127,25 @@
     name.title = card.cardName;
     label.append(name);
 
+    if (isDeprecated) {
+      label.append(createDeprecatedBadge('card-status-badge'));
+    }
+
     button.append(imgWrap, label);
     button.addEventListener('click', () => openLightbox(card, series, button));
     observeImage(img);
 
-    return button;
+    return {
+      element: button,
+      isDeprecated,
+      nameLower: card.cardName.toLocaleLowerCase('zh-CN'),
+    };
   }
 
   function createSeriesSection(series) {
+    const isSeriesDeprecated = Boolean(series.deprecated);
     const section = document.createElement('section');
-    section.className = 'series-section';
+    section.className = isSeriesDeprecated ? 'series-section is-deprecated' : 'series-section';
 
     const header = document.createElement('header');
     header.className = 'series-header';
@@ -114,15 +160,33 @@
 
     header.append(title, count);
 
+    if (isSeriesDeprecated) {
+      header.append(createDeprecatedBadge());
+      const deprecatedDate = formatDate(series.deprecatedAt);
+      if (deprecatedDate) {
+        const dateNote = document.createElement('span');
+        dateNote.className = 'series-deprecated-date';
+        dateNote.textContent = `归档下架：${deprecatedDate}`;
+        header.append(dateNote);
+      }
+    }
+
     const grid = document.createElement('div');
     grid.className = 'series-grid';
 
-    for (const card of series.cards) {
-      grid.append(createCard(card, series));
-    }
+    const cardEntries = series.cards.map((card) => {
+      const entry = createCard(card, series);
+      grid.append(entry.element);
+      return entry;
+    });
 
     section.append(header, grid);
-    return section;
+    return {
+      element: section,
+      countElement: count,
+      seriesName: series.seriesName.toLocaleLowerCase('zh-CN'),
+      cards: cardEntries,
+    };
   }
 
   function renderGallery(data) {
@@ -130,47 +194,96 @@
     const fragment = document.createDocumentFragment();
 
     let totalCards = 0;
+    let deprecatedCards = 0;
+    let deprecatedSeries = 0;
     seriesSections = allSeries.map((series) => {
-      totalCards += series.cards.length;
-      const section = createSeriesSection(series);
-      fragment.append(section);
-      return {
-        element: section,
-        seriesName: series.seriesName.toLocaleLowerCase('zh-CN'),
-        cardNames: series.cards.map((c) => c.cardName.toLocaleLowerCase('zh-CN')),
-      };
+      const entry = createSeriesSection(series);
+      fragment.append(entry.element);
+      totalCards += entry.cards.length;
+      if (series.deprecated) deprecatedSeries += 1;
+      deprecatedCards += entry.cards.filter((c) => c.isDeprecated).length;
+      return entry;
     });
 
     elements.container.replaceChildren(fragment);
-    elements.seriesCount.textContent = String(allSeries.length);
-    elements.cardCount.textContent = String(totalCards);
+    elements.countAll.textContent = String(totalCards);
+    elements.countActive.textContent = String(totalCards - deprecatedCards);
+    elements.countDeprecated.textContent = String(deprecatedCards);
+
+    const syncDate = formatDate(data.generatedAt);
+    const noteParts = [];
+    if (deprecatedCards > 0) {
+      noteParts.push(`已保留 ${deprecatedSeries} 个已下架系列（${deprecatedCards} 张卡面）`);
+    } else {
+      noteParts.push('当前暂无已下架卡面');
+    }
+    if (syncDate) {
+      noteParts.push(`同步于 ${syncDate}`);
+    }
+    elements.archiveNote.textContent = noteParts.join(' · ');
 
     elements.loading.hidden = true;
-    elements.container.hidden = allSeries.length === 0;
-    elements.empty.hidden = allSeries.length !== 0;
+    elements.filterBar.hidden = allSeries.length === 0;
+    filterGallery();
+  }
+
+  function setStatusFilter(filter) {
+    currentFilter = filter;
+    for (const btn of elements.filterButtons) {
+      const isSelected = btn.dataset.filter === filter;
+      btn.classList.toggle('active', isSelected);
+      btn.setAttribute('aria-selected', String(isSelected));
+    }
+    filterGallery();
   }
 
   function filterGallery() {
     const query = elements.search.value.trim().toLocaleLowerCase('zh-CN');
     elements.searchClear.hidden = !query;
 
-    let visibleCount = 0;
+    let visibleSeriesCount = 0;
+    let visibleCardCount = 0;
 
     for (const item of seriesSections) {
+      const eligibleCards = [];
+      for (const card of item.cards) {
+        const matchesStatus =
+          currentFilter === 'all'
+          || (currentFilter === 'active' && !card.isDeprecated)
+          || (currentFilter === 'deprecated' && card.isDeprecated);
+        card.element.hidden = !matchesStatus;
+        if (matchesStatus) eligibleCards.push(card);
+      }
+
       const matchSeries = item.seriesName.includes(query);
-      const matchCards = !matchSeries && item.cardNames.some((name) => name.includes(query));
-      const isVisible = !query || matchSeries || matchCards;
+      const matchCards = !matchSeries && eligibleCards.some((card) => card.nameLower.includes(query));
+      const isVisible = eligibleCards.length > 0 && (!query || matchSeries || matchCards);
 
       item.element.hidden = !isVisible;
-      if (isVisible) visibleCount += 1;
+      item.countElement.textContent = `${eligibleCards.length} 张`;
+      if (isVisible) {
+        visibleSeriesCount += 1;
+        visibleCardCount += eligibleCards.length;
+      }
     }
 
-    elements.empty.hidden = visibleCount !== 0;
-    elements.container.hidden = visibleCount === 0;
+    elements.seriesCount.textContent = String(visibleSeriesCount);
+    elements.cardCount.textContent = String(visibleCardCount);
+    elements.empty.firstElementChild.textContent = !query && currentFilter === 'deprecated'
+      ? '暂无已下架卡面'
+      : '未找到匹配的卡面或系列';
+    elements.empty.hidden = visibleSeriesCount !== 0;
+    elements.container.hidden = visibleSeriesCount === 0;
   }
 
   function bindEvents() {
     elements.search.addEventListener('input', filterGallery);
+
+    for (const btn of elements.filterButtons) {
+      btn.addEventListener('click', () => {
+        setStatusFilter(btn.dataset.filter || 'all');
+      });
+    }
 
     elements.searchClear.addEventListener('click', () => {
       elements.search.value = '';

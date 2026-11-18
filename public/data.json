@@ -1,19 +1,27 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "generatedAt": "2026-11-17T06:22:28+00:00",
   "source": {
-    "scope": "current anonymous catalog response",
+    "scope": "merged anonymous catalog archive (active + deprecated)",
     "cityCode": "01",
     "ctp": "05",
     "suitChannel": "4"
   },
-  "totalSeries": 306,
-  "totalCards": 1393,
+  "totalSeries": 317,
+  "totalCards": 1443,
+  "activeSeries": 306,
+  "activeCards": 1393,
+  "deprecatedSeries": 11,
+  "deprecatedCards": 50,
   "sync": {
     "newSeries": 17,
     "newCards": 74,
-    "removedSeries": 3,
-    "removedCards": 18
+    "newlyDeprecatedSeries": 2,
+    "newlyDeprecatedCards": 12,
+    "restoredSeries": 0,
+    "restoredCards": 0,
+    "supersededSeries": 1,
+    "supersededCards": 6
   },
   "series": [
     {
@@ -1337,6 +1345,24 @@
       ]
     },
     {
+      "seriesId": "27018",
+      "seriesName": "DOTA 2 TI 2026系列-冠军之神盾",
+      "brand": "岭南通·羊城通",
+      "deprecated": true,
+      "deprecatedAt": "2026-09-30T02:15:17+00:00",
+      "cardCount": 1,
+      "cards": [
+        {
+          "cardId": "27019",
+          "cardName": "TI2026-冠军之神盾",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/27018/27019.webp",
+          "thumbnailFile": "thumbs/27018/27019.webp"
+        }
+      ]
+    },
+    {
       "seriesId": "27004",
       "seriesName": "少女乐队的呐喊 第二弹",
       "brand": "岭南通·羊城通",
@@ -2369,6 +2395,56 @@
       ]
     },
     {
+      "seriesId": "26488",
+      "seriesName": "王者荣耀授权-破阵系列",
+      "brand": "岭南通·羊城通",
+      "deprecated": true,
+      "deprecatedAt": "2026-09-30T02:15:17+00:00",
+      "cardCount": 5,
+      "cards": [
+        {
+          "cardId": "26490",
+          "cardName": "后羿款",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/26488/26490.webp",
+          "thumbnailFile": "thumbs/26488/26490.webp"
+        },
+        {
+          "cardId": "26492",
+          "cardName": "铠款",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/26488/26492.webp",
+          "thumbnailFile": "thumbs/26488/26492.webp"
+        },
+        {
+          "cardId": "26494",
+          "cardName": "吕布款",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/26488/26494.webp",
+          "thumbnailFile": "thumbs/26488/26494.webp"
+        },
+        {
+          "cardId": "26496",
+          "cardName": "夏侯惇款",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/26488/26496.webp",
+          "thumbnailFile": "thumbs/26488/26496.webp"
+        },
+        {
+          "cardId": "26498",
+          "cardName": "赵云款",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/26488/26498.webp",
+          "thumbnailFile": "thumbs/26488/26498.webp"
+        }
+      ]
+    },
+    {
       "seriesId": "26467",
       "seriesName": "马德里竞技 系列二",
       "brand": "岭南通·羊城通",
@@ -2511,6 +2587,64 @@
           "cardName": "逃迹漫游",
           "imageFile": "cards/26433/26444.webp",
           "thumbnailFile": "thumbs/26433/26444.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "26419",
+      "seriesName": "王者荣耀授权-花开秘境系列",
+      "brand": "岭南通·羊城通",
+      "deprecated": true,
+      "deprecatedAt": "2026-09-30T02:15:17+00:00",
+      "cardCount": 6,
+      "cards": [
+        {
+          "cardId": "26421",
+          "cardName": "小乔",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/26419/26421.webp",
+          "thumbnailFile": "thumbs/26419/26421.webp"
+        },
+        {
+          "cardId": "26423",
+          "cardName": "杨玉环",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/26419/26423.webp",
+          "thumbnailFile": "thumbs/26419/26423.webp"
+        },
+        {
+          "cardId": "26752",
+          "cardName": "貂蝉",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/26419/26752.webp",
+          "thumbnailFile": "thumbs/26419/26752.webp"
+        },
+        {
+          "cardId": "26427",
+          "cardName": "王昭君",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/26419/26427.webp",
+          "thumbnailFile": "thumbs/26419/26427.webp"
+        },
+        {
+          "cardId": "26429",
+          "cardName": "公孙离",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/26419/26429.webp",
+          "thumbnailFile": "thumbs/26419/26429.webp"
+        },
+        {
+          "cardId": "26431",
+          "cardName": "云缨",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/26419/26431.webp",
+          "thumbnailFile": "thumbs/26419/26431.webp"
         }
       ]
     },
@@ -2695,6 +2829,64 @@
           "cardName": "懒灰好朋友",
           "imageFile": "cards/26345/26367.webp",
           "thumbnailFile": "thumbs/26345/26367.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "26296",
+      "seriesName": "EXO 联名全国交通卡",
+      "brand": "岭南通·羊城通",
+      "deprecated": true,
+      "deprecatedAt": "2026-11-17T06:22:28+00:00",
+      "cardCount": 6,
+      "cards": [
+        {
+          "cardId": "26303",
+          "cardName": "EXO",
+          "deprecated": true,
+          "deprecatedAt": "2026-11-17T06:22:28+00:00",
+          "imageFile": "cards/26296/26303.webp",
+          "thumbnailFile": "thumbs/26296/26303.webp"
+        },
+        {
+          "cardId": "26310",
+          "cardName": "SUHO",
+          "deprecated": true,
+          "deprecatedAt": "2026-11-17T06:22:28+00:00",
+          "imageFile": "cards/26296/26310.webp",
+          "thumbnailFile": "thumbs/26296/26310.webp"
+        },
+        {
+          "cardId": "26317",
+          "cardName": "CHANYEOL",
+          "deprecated": true,
+          "deprecatedAt": "2026-11-17T06:22:28+00:00",
+          "imageFile": "cards/26296/26317.webp",
+          "thumbnailFile": "thumbs/26296/26317.webp"
+        },
+        {
+          "cardId": "26324",
+          "cardName": "D.O.",
+          "deprecated": true,
+          "deprecatedAt": "2026-11-17T06:22:28+00:00",
+          "imageFile": "cards/26296/26324.webp",
+          "thumbnailFile": "thumbs/26296/26324.webp"
+        },
+        {
+          "cardId": "26331",
+          "cardName": "KAI",
+          "deprecated": true,
+          "deprecatedAt": "2026-11-17T06:22:28+00:00",
+          "imageFile": "cards/26296/26331.webp",
+          "thumbnailFile": "thumbs/26296/26331.webp"
+        },
+        {
+          "cardId": "26338",
+          "cardName": "SEHUN",
+          "deprecated": true,
+          "deprecatedAt": "2026-11-17T06:22:28+00:00",
+          "imageFile": "cards/26296/26338.webp",
+          "thumbnailFile": "thumbs/26296/26338.webp"
         }
       ]
     },
@@ -4187,6 +4379,56 @@
           "cardName": "炫彩之夜",
           "imageFile": "cards/24989/25028.webp",
           "thumbnailFile": "thumbs/24989/25028.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "24947",
+      "seriesName": "三丽鸥家族",
+      "brand": "岭南通·羊城通",
+      "deprecated": true,
+      "deprecatedAt": "2026-09-30T02:15:17+00:00",
+      "cardCount": 5,
+      "cards": [
+        {
+          "cardId": "24954",
+          "cardName": "Hello Kitty",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/24947/24954.webp",
+          "thumbnailFile": "thumbs/24947/24954.webp"
+        },
+        {
+          "cardId": "24961",
+          "cardName": "My Melody",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/24947/24961.webp",
+          "thumbnailFile": "thumbs/24947/24961.webp"
+        },
+        {
+          "cardId": "24968",
+          "cardName": "Kuromi",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/24947/24968.webp",
+          "thumbnailFile": "thumbs/24947/24968.webp"
+        },
+        {
+          "cardId": "24975",
+          "cardName": "Pompompurin",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/24947/24975.webp",
+          "thumbnailFile": "thumbs/24947/24975.webp"
+        },
+        {
+          "cardId": "24982",
+          "cardName": "Cinnamoroll",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/24947/24982.webp",
+          "thumbnailFile": "thumbs/24947/24982.webp"
         }
       ]
     },
@@ -6855,6 +7097,98 @@
       ]
     },
     {
+      "seriesId": "22334",
+      "seriesName": "王者荣耀合作款黑金系列 B组",
+      "brand": "岭南通·羊城通",
+      "deprecated": true,
+      "deprecatedAt": "2026-09-30T02:15:17+00:00",
+      "cardCount": 4,
+      "cards": [
+        {
+          "cardId": "22341",
+          "cardName": "貂蝉",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/22334/22341.webp",
+          "thumbnailFile": "thumbs/22334/22341.webp"
+        },
+        {
+          "cardId": "22342",
+          "cardName": "亚瑟",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/22334/22342.webp",
+          "thumbnailFile": "thumbs/22334/22342.webp"
+        },
+        {
+          "cardId": "22343",
+          "cardName": "蔡文姬",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/22334/22343.webp",
+          "thumbnailFile": "thumbs/22334/22343.webp"
+        },
+        {
+          "cardId": "22344",
+          "cardName": "花木兰",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/22334/22344.webp",
+          "thumbnailFile": "thumbs/22334/22344.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "22292",
+      "seriesName": "王者荣耀合作款黑金系列 A组",
+      "brand": "岭南通·羊城通",
+      "deprecated": true,
+      "deprecatedAt": "2026-09-30T02:15:17+00:00",
+      "cardCount": 5,
+      "cards": [
+        {
+          "cardId": "22299",
+          "cardName": "李白",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/22292/22299.webp",
+          "thumbnailFile": "thumbs/22292/22299.webp"
+        },
+        {
+          "cardId": "22300",
+          "cardName": "钟无艳",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/22292/22300.webp",
+          "thumbnailFile": "thumbs/22292/22300.webp"
+        },
+        {
+          "cardId": "22301",
+          "cardName": "云缨",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/22292/22301.webp",
+          "thumbnailFile": "thumbs/22292/22301.webp"
+        },
+        {
+          "cardId": "22302",
+          "cardName": "澜",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/22292/22302.webp",
+          "thumbnailFile": "thumbs/22292/22302.webp"
+        },
+        {
+          "cardId": "22303",
+          "cardName": "孙尚香",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/22292/22303.webp",
+          "thumbnailFile": "thumbs/22292/22303.webp"
+        }
+      ]
+    },
+    {
       "seriesId": "22243",
       "seriesName": "忘川风华录",
       "brand": "岭南通·羊城通",
@@ -6889,6 +7223,64 @@
           "cardName": "嬴政",
           "imageFile": "cards/22243/22254.webp",
           "thumbnailFile": "thumbs/22243/22254.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "22236",
+      "seriesName": "战双帕弥什 六周年纪念交通卡",
+      "brand": "岭南通·羊城通",
+      "deprecated": true,
+      "deprecatedAt": "2026-11-17T06:22:28+00:00",
+      "cardCount": 6,
+      "cards": [
+        {
+          "cardId": "22237",
+          "cardName": "丽芙·霁梦",
+          "deprecated": true,
+          "deprecatedAt": "2026-11-17T06:22:28+00:00",
+          "imageFile": "cards/22236/22237.webp",
+          "thumbnailFile": "thumbs/22236/22237.webp"
+        },
+        {
+          "cardId": "22238",
+          "cardName": "露西亚·誓焰",
+          "deprecated": true,
+          "deprecatedAt": "2026-11-17T06:22:28+00:00",
+          "imageFile": "cards/22236/22238.webp",
+          "thumbnailFile": "thumbs/22236/22238.webp"
+        },
+        {
+          "cardId": "22239",
+          "cardName": "里·超刻",
+          "deprecated": true,
+          "deprecatedAt": "2026-11-17T06:22:28+00:00",
+          "imageFile": "cards/22236/22239.webp",
+          "thumbnailFile": "thumbs/22236/22239.webp"
+        },
+        {
+          "cardId": "22240",
+          "cardName": "赛琳娜·希声",
+          "deprecated": true,
+          "deprecatedAt": "2026-11-17T06:22:28+00:00",
+          "imageFile": "cards/22236/22240.webp",
+          "thumbnailFile": "thumbs/22236/22240.webp"
+        },
+        {
+          "cardId": "22241",
+          "cardName": "比安卡·晖暮",
+          "deprecated": true,
+          "deprecatedAt": "2026-11-17T06:22:28+00:00",
+          "imageFile": "cards/22236/22241.webp",
+          "thumbnailFile": "thumbs/22236/22241.webp"
+        },
+        {
+          "cardId": "22242",
+          "cardName": "万事·明晰梦",
+          "deprecated": true,
+          "deprecatedAt": "2026-11-17T06:22:28+00:00",
+          "imageFile": "cards/22236/22242.webp",
+          "thumbnailFile": "thumbs/22236/22242.webp"
         }
       ]
     },
@@ -7593,6 +7985,90 @@
           "cardName": "海底小纵队-花仔×阿依古丽",
           "imageFile": "cards/21535/21546.webp",
           "thumbnailFile": "thumbs/21535/21546.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "21500",
+      "seriesName": "最终幻想14夏日系列第二弹",
+      "brand": "岭南通·羊城通",
+      "deprecated": true,
+      "deprecatedAt": "2026-09-30T02:15:17+00:00",
+      "cardCount": 4,
+      "cards": [
+        {
+          "cardId": "21507",
+          "cardName": "阿尔菲诺",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/21500/21507.webp",
+          "thumbnailFile": "thumbs/21500/21507.webp"
+        },
+        {
+          "cardId": "21508",
+          "cardName": "桑克瑞德",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/21500/21508.webp",
+          "thumbnailFile": "thumbs/21500/21508.webp"
+        },
+        {
+          "cardId": "21509",
+          "cardName": "古·拉哈·提亚",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/21500/21509.webp",
+          "thumbnailFile": "thumbs/21500/21509.webp"
+        },
+        {
+          "cardId": "21510",
+          "cardName": "雅·修特拉",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/21500/21510.webp",
+          "thumbnailFile": "thumbs/21500/21510.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "21465",
+      "seriesName": "最终幻想14夏日系列第一弹",
+      "brand": "岭南通·羊城通",
+      "deprecated": true,
+      "deprecatedAt": "2026-09-30T02:15:17+00:00",
+      "cardCount": 4,
+      "cards": [
+        {
+          "cardId": "21472",
+          "cardName": "阿莉塞",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/21465/21472.webp",
+          "thumbnailFile": "thumbs/21465/21472.webp"
+        },
+        {
+          "cardId": "21473",
+          "cardName": "于里昂热",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/21465/21473.webp",
+          "thumbnailFile": "thumbs/21465/21473.webp"
+        },
+        {
+          "cardId": "21474",
+          "cardName": "可露儿",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/21465/21474.webp",
+          "thumbnailFile": "thumbs/21465/21474.webp"
+        },
+        {
+          "cardId": "21475",
+          "cardName": "埃斯蒂尼安",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/21465/21475.webp",
+          "thumbnailFile": "thumbs/21465/21475.webp"
         }
       ]
     },
@@ -8539,6 +9015,48 @@
           "cardName": "【P3R联动纪念】款",
           "imageFile": "cards/20367/20375.webp",
           "thumbnailFile": "thumbs/20367/20375.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "20325",
+      "seriesName": "黑色信标手游系列",
+      "brand": "岭南通·羊城通",
+      "deprecated": true,
+      "deprecatedAt": "2026-09-30T02:15:17+00:00",
+      "cardCount": 4,
+      "cards": [
+        {
+          "cardId": "20331",
+          "cardName": "零",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/20325/20331.webp",
+          "thumbnailFile": "thumbs/20325/20331.webp"
+        },
+        {
+          "cardId": "20332",
+          "cardName": "铂鸢",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/20325/20332.webp",
+          "thumbnailFile": "thumbs/20325/20332.webp"
+        },
+        {
+          "cardId": "20333",
+          "cardName": "薇奥拉",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/20325/20333.webp",
+          "thumbnailFile": "thumbs/20325/20333.webp"
+        },
+        {
+          "cardId": "20334",
+          "cardName": "黑色信标Q版",
+          "deprecated": true,
+          "deprecatedAt": "2026-09-30T02:15:17+00:00",
+          "imageFile": "cards/20325/20334.webp",
+          "thumbnailFile": "thumbs/20325/20334.webp"
         }
       ]
     },

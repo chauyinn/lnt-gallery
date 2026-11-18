@@ -34,6 +34,21 @@
   </header>
 
   <main class="main">
+    <div id="filterBar" class="filter-bar" hidden>
+      <div class="status-filter" role="tablist" aria-label="上架状态筛选">
+        <button type="button" class="filter-pill active" data-filter="all" role="tab" aria-selected="true">
+          全部 <span class="filter-count" id="countAll">0</span>
+        </button>
+        <button type="button" class="filter-pill" data-filter="active" role="tab" aria-selected="false">
+          在架 <span class="filter-count" id="countActive">0</span>
+        </button>
+        <button type="button" class="filter-pill" data-filter="deprecated" role="tab" aria-selected="false">
+          已下架 <span class="filter-count" id="countDeprecated">0</span>
+        </button>
+      </div>
+      <p id="archiveNote" class="archive-note"></p>
+    </div>
+
     <div id="loadingState" class="loading-wrap" aria-live="polite">
       <div class="spinner"></div>
       <p class="loading-text">正在加载卡面数据...</p>
@@ -55,6 +70,7 @@
     <div class="lightbox-content">
       <img id="lightboxImg" class="lightbox-img" src="" alt="">
       <div class="lightbox-caption">
+        <span class="status-badge status-badge--deprecated" id="lightboxBadge" hidden>已下架</span>
         <span class="lightbox-title" id="lightboxTitle"></span>
         <span class="lightbox-sub" id="lightboxSub"></span>
       </div>
