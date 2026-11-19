@@ -1,29 +1,73 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-11-17T06:22:28+00:00",
+  "generatedAt": "2026-11-19T03:22:33+00:00",
   "source": {
     "scope": "merged anonymous catalog archive (active + deprecated)",
     "cityCode": "01",
     "ctp": "05",
     "suitChannel": "4"
   },
-  "totalSeries": 317,
-  "totalCards": 1443,
-  "activeSeries": 306,
-  "activeCards": 1393,
+  "totalSeries": 318,
+  "totalCards": 1449,
+  "activeSeries": 307,
+  "activeCards": 1399,
   "deprecatedSeries": 11,
   "deprecatedCards": 50,
   "sync": {
-    "newSeries": 17,
-    "newCards": 74,
-    "newlyDeprecatedSeries": 2,
-    "newlyDeprecatedCards": 12,
+    "newSeries": 1,
+    "newCards": 6,
+    "newlyDeprecatedSeries": 0,
+    "newlyDeprecatedCards": 0,
     "restoredSeries": 0,
     "restoredCards": 0,
-    "supersededSeries": 1,
-    "supersededCards": 6
+    "supersededSeries": 0,
+    "supersededCards": 0
   },
   "series": [
+    {
+      "seriesId": "27913",
+      "seriesName": "顽顽崽-白日梦想家",
+      "brand": "岭南通·羊城通",
+      "cardCount": 6,
+      "cards": [
+        {
+          "cardId": "27920",
+          "cardName": "甜筒崽",
+          "imageFile": "cards/27913/27920.webp",
+          "thumbnailFile": "thumbs/27913/27920.webp"
+        },
+        {
+          "cardId": "27927",
+          "cardName": "绒绒兔",
+          "imageFile": "cards/27913/27927.webp",
+          "thumbnailFile": "thumbs/27913/27927.webp"
+        },
+        {
+          "cardId": "27934",
+          "cardName": "见习爱神",
+          "imageFile": "cards/27913/27934.webp",
+          "thumbnailFile": "thumbs/27913/27934.webp"
+        },
+        {
+          "cardId": "27941",
+          "cardName": "许愿树",
+          "imageFile": "cards/27913/27941.webp",
+          "thumbnailFile": "thumbs/27913/27941.webp"
+        },
+        {
+          "cardId": "27948",
+          "cardName": "小太阳",
+          "imageFile": "cards/27913/27948.webp",
+          "thumbnailFile": "thumbs/27913/27948.webp"
+        },
+        {
+          "cardId": "27955",
+          "cardName": "熊猫崽",
+          "imageFile": "cards/27913/27955.webp",
+          "thumbnailFile": "thumbs/27913/27955.webp"
+        }
+      ]
+    },
     {
       "seriesId": "27876",
       "seriesName": "蒜皮宝宝 第二弹",
@@ -1947,38 +1991,6 @@
       ]
     },
     {
-      "seriesId": "26771",
-      "seriesName": "巴啦啦小魔仙2.0系列",
-      "brand": "岭南通·羊城通",
-      "cardCount": 4,
-      "cards": [
-        {
-          "cardId": "26774",
-          "cardName": "小蓝",
-          "imageFile": "cards/26771/26774.webp",
-          "thumbnailFile": "thumbs/26771/26774.webp"
-        },
-        {
-          "cardId": "26776",
-          "cardName": "夏乐彤",
-          "imageFile": "cards/26771/26776.webp",
-          "thumbnailFile": "thumbs/26771/26776.webp"
-        },
-        {
-          "cardId": "26778",
-          "cardName": "贝贝",
-          "imageFile": "cards/26771/26778.webp",
-          "thumbnailFile": "thumbs/26771/26778.webp"
-        },
-        {
-          "cardId": "26780",
-          "cardName": "雅雅",
-          "imageFile": "cards/26771/26780.webp",
-          "thumbnailFile": "thumbs/26771/26780.webp"
-        }
-      ]
-    },
-    {
       "seriesId": "26943",
       "seriesName": "宝可梦30周年 最初的伙伴 神奥地区",
       "brand": "岭南通·羊城通",
@@ -2053,6 +2065,38 @@
           "cardName": "小锯鳄",
           "imageFile": "cards/26936/26939.webp",
           "thumbnailFile": "thumbs/26936/26939.webp"
+        }
+      ]
+    },
+    {
+      "seriesId": "26771",
+      "seriesName": "巴啦啦小魔仙2.0系列",
+      "brand": "岭南通·羊城通",
+      "cardCount": 4,
+      "cards": [
+        {
+          "cardId": "26774",
+          "cardName": "小蓝",
+          "imageFile": "cards/26771/26774.webp",
+          "thumbnailFile": "thumbs/26771/26774.webp"
+        },
+        {
+          "cardId": "26776",
+          "cardName": "夏乐彤",
+          "imageFile": "cards/26771/26776.webp",
+          "thumbnailFile": "thumbs/26771/26776.webp"
+        },
+        {
+          "cardId": "26778",
+          "cardName": "贝贝",
+          "imageFile": "cards/26771/26778.webp",
+          "thumbnailFile": "thumbs/26771/26778.webp"
+        },
+        {
+          "cardId": "26780",
+          "cardName": "雅雅",
+          "imageFile": "cards/26771/26780.webp",
+          "thumbnailFile": "thumbs/26771/26780.webp"
         }
       ]
     },
