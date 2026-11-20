@@ -11,8 +11,12 @@ permissions:
 
 jobs:
   check:
-    name: Test catalog and fresh image downloads
-    runs-on: ubuntu-latest
+    name: Test upstream (${{ matrix.runner }})
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-latest, ubuntu-24.04-arm, macos-latest]
+    runs-on: ${{ matrix.runner }}
     timeout-minutes: 10
     steps:
       - name: Check out repository
@@ -34,12 +38,15 @@ jobs:
           import hashlib
           import json
           import os
+          import socket
           from io import BytesIO
           from pathlib import Path
 
           import requests
           from PIL import Image
+          from requests.adapters import HTTPAdapter
 
+          import crawler
           from crawler import LingnanPassClient, SyncError, _remote_image_path, _series_id
 
           report = ["## Upstream connectivity", ""]
@@ -49,8 +56,13 @@ jobs:
               report.append(message + "  ")
 
           client = LingnanPassClient()
+          # Probe each sample once with a short timeout; production sync retains its retries.
+          crawler.IMAGE_TIMEOUT = 10
+          client.session.mount(crawler._IMAGE_BASE + "/", HTTPAdapter(max_retries=0))
           try:
               log(f"Runner: {os.environ.get('RUNNER_NAME')} ({os.environ.get('RUNNER_OS')}/{os.environ.get('RUNNER_ARCH')})")
+              addresses = sorted({entry[4][0] for entry in socket.getaddrinfo("wuqa.lingnanpass.com", 7574, type=socket.SOCK_STREAM)})
+              log(f"Image server DNS: {addresses}")
               try:
                   response = requests.get("https://ipwho.is/", timeout=15)
                   response.raise_for_status()
@@ -65,6 +77,7 @@ jobs:
               log(f"Catalog API: PASS ({len(series)} active series)")
               indices = sorted({0, len(series) // 2, len(series) - 1})
               downloaded = 0
+              failures = []
               for index in indices:
                   series_id = _series_id(series[index])
                   cards = client.fetch_series_cards(series_id)
@@ -74,13 +87,19 @@ jobs:
                   remote_path = _remote_image_path(cards[0])
                   if not remote_path:
                       raise SyncError(f"Sample series {series_id} has no image URL")
-                  image_bytes = client.download_image(remote_path)
-                  with Image.open(BytesIO(image_bytes)) as image:
-                      image.load()
-                      dimensions = f"{image.width}x{image.height} {image.format}"
-                  digest = hashlib.sha256(image_bytes).hexdigest()
-                  log(f"Fresh image: PASS (series {series_id}, {len(image_bytes)} bytes, {dimensions}, SHA256 {digest})")
-                  downloaded += 1
+                  try:
+                      image_bytes = client.download_image(remote_path)
+                      with Image.open(BytesIO(image_bytes)) as image:
+                          image.load()
+                          dimensions = f"{image.width}x{image.height} {image.format}"
+                      digest = hashlib.sha256(image_bytes).hexdigest()
+                      log(f"Fresh image: PASS (series {series_id}, {len(image_bytes)} bytes, {dimensions}, SHA256 {digest})")
+                      downloaded += 1
+                  except (SyncError, OSError, ValueError) as exc:
+                      failures.append(series_id)
+                      log(f"Fresh image: FAIL (series {series_id}): {exc}")
+              if failures:
+                  raise SyncError(f"{len(failures)} of {len(indices)} fresh image downloads failed")
               log(f"Result: PASS; {downloaded} original images downloaded and decoded without using public/ assets.")
           except Exception as exc:
               log(f"Result: FAIL; {exc}")
