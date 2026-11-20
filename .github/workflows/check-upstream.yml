@@ -1,0 +1,91 @@
+name: Check upstream connectivity
+
+on:
+  push:
+    branches: [codex/github-crawl-automation]
+    paths: [.github/workflows/check-upstream.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Test catalog and fresh image downloads
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+
+      - name: Test upstream without local image cache
+        shell: bash
+        run: |
+          python -u - <<'PY'
+          import hashlib
+          import json
+          import os
+          from io import BytesIO
+          from pathlib import Path
+
+          import requests
+          from PIL import Image
+
+          from crawler import LingnanPassClient, SyncError, _remote_image_path, _series_id
+
+          report = ["## Upstream connectivity", ""]
+
+          def log(message):
+              print(message, flush=True)
+              report.append(message + "  ")
+
+          client = LingnanPassClient()
+          try:
+              log(f"Runner: {os.environ.get('RUNNER_NAME')} ({os.environ.get('RUNNER_OS')}/{os.environ.get('RUNNER_ARCH')})")
+              try:
+                  response = requests.get("https://ipwho.is/", timeout=15)
+                  response.raise_for_status()
+                  location = response.json()
+                  if not location.get("success"):
+                      raise ValueError("IP location lookup did not succeed")
+                  log("Egress: " + json.dumps({key: location.get(key) for key in ("ip", "country", "country_code", "region", "city")}, ensure_ascii=False))
+              except (requests.RequestException, ValueError) as exc:
+                  log(f"IP location unavailable (upstream tests will still run): {exc}")
+
+              series = client.fetch_all_series()
+              log(f"Catalog API: PASS ({len(series)} active series)")
+              indices = sorted({0, len(series) // 2, len(series) - 1})
+              downloaded = 0
+              for index in indices:
+                  series_id = _series_id(series[index])
+                  cards = client.fetch_series_cards(series_id)
+                  if not cards:
+                      raise SyncError(f"Sample series {series_id} returned no cards")
+                  log(f"Detail API: PASS (series {series_id}, {len(cards)} cards)")
+                  remote_path = _remote_image_path(cards[0])
+                  if not remote_path:
+                      raise SyncError(f"Sample series {series_id} has no image URL")
+                  image_bytes = client.download_image(remote_path)
+                  with Image.open(BytesIO(image_bytes)) as image:
+                      image.load()
+                      dimensions = f"{image.width}x{image.height} {image.format}"
+                  digest = hashlib.sha256(image_bytes).hexdigest()
+                  log(f"Fresh image: PASS (series {series_id}, {len(image_bytes)} bytes, {dimensions}, SHA256 {digest})")
+                  downloaded += 1
+              log(f"Result: PASS; {downloaded} original images downloaded and decoded without using public/ assets.")
+          except Exception as exc:
+              log(f"Result: FAIL; {exc}")
+              raise
+          finally:
+              client.close()
+              Path(os.environ["GITHUB_STEP_SUMMARY"]).write_text("\n".join(report) + "\n", encoding="utf-8")
+          PY
